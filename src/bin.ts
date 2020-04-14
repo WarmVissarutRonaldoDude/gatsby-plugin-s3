@@ -20,7 +20,7 @@ import util from 'util';
 import minimatch from 'minimatch';
 import mime from 'mime';
 import inquirer from 'inquirer';
-import { config as awsConfig } from 'aws-sdk';
+import { config as awsConfig }, AWS from 'aws-sdk';
 import { createHash } from 'crypto';
 import isCI from 'is-ci';
 import { getS3WebsiteDomainUrl, withoutLeadingSlash } from './util';
@@ -107,8 +107,8 @@ const createSafeS3Key = (key: string): string => {
 };
 
 const setAWSTimeout = (): void => {
-    if (process.env.AWS_HTTP_TIMEOUT && awsConfig.httpOptions) {
-        awsConfig.httpOptions.timeout = Number(process.env.AWS_HTTP_TIMEOUT);
+    if (process.env.AWS_HTTP_TIMEOUT && AWS.config.httpOptions) {
+        AWS.config.httpOptions.timeout = Number(process.env.AWS_HTTP_TIMEOUT);
     }
 };
 

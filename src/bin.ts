@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-nocheck
 
 import '@babel/polyfill';
 import 'fs-posix';
@@ -109,7 +110,7 @@ const setAWSTimeout = (): void => {
     if (process.env.AWS_HTTP_TIMEOUT && awsConfig.httpOptions) {
         awsConfig.httpOptions.timeout = Number(process.env.AWS_HTTP_TIMEOUT);
     }
-}
+};
 
 const deploy = async ({ yes, bucket }: { yes: boolean; bucket: string }) => {
     const spinner = ora({ text: 'Retrieving bucket info...', color: 'magenta', stream: process.stdout }).start();
@@ -119,7 +120,7 @@ const deploy = async ({ yes, bucket }: { yes: boolean; bucket: string }) => {
 
     try {
         setAWSTimeout();
-        
+
         const config: S3PluginOptions = await readJson(CACHE_FILES.config);
         const params: Params = await readJson(CACHE_FILES.params);
         const routingRules: RoutingRules = await readJson(CACHE_FILES.routingRules);

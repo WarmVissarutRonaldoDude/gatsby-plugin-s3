@@ -20,7 +20,7 @@ import util from 'util';
 import minimatch from 'minimatch';
 import mime from 'mime';
 import inquirer from 'inquirer';
-import { config as awsConfig }, AWS from 'aws-sdk';
+import AWS, { config as awsConfig } from 'aws-sdk';
 import { createHash } from 'crypto';
 import isCI from 'is-ci';
 import { getS3WebsiteDomainUrl, withoutLeadingSlash } from './util';

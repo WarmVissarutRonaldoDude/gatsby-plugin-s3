@@ -105,6 +105,12 @@ const createSafeS3Key = (key: string): string => {
     return key;
 };
 
+const setAWSTimeout = (): void => {
+    if (process.env.AWS_HTTP_TIMEOUT && awsConfig.httpOptions) {
+        awsConfig.httpOptions.timeout = Number(process.env.AWS_HTTP_TIMEOUT);
+    }
+}
+
 const deploy = async ({ yes, bucket }: { yes: boolean; bucket: string }) => {
     const spinner = ora({ text: 'Retrieving bucket info...', color: 'magenta', stream: process.stdout }).start();
     let dontPrompt = yes;
@@ -112,6 +118,8 @@ const deploy = async ({ yes, bucket }: { yes: boolean; bucket: string }) => {
     const uploadQueue: Array<AsyncFunction<void, Error>> = [];
 
     try {
+        setAWSTimeout();
+        
         const config: S3PluginOptions = await readJson(CACHE_FILES.config);
         const params: Params = await readJson(CACHE_FILES.params);
         const routingRules: RoutingRules = await readJson(CACHE_FILES.routingRules);
